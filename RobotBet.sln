@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32106.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RobotBetWatcher", "RobotBetWatcher\RobotBetWatcher.csproj", "{ADD74CEA-D55A-4719-8A94-7CC21F5C11B6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RobotBetApi", "RobotBetApi\RobotBetApi.csproj", "{EA417771-1E09-448A-9938-DE3FEAE64B04}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2AB9C8AA-397E-4D6E-A867-A59DE0E7D159}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE.txt = LICENSE.txt
+		README.txt = README.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ADD74CEA-D55A-4719-8A94-7CC21F5C11B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADD74CEA-D55A-4719-8A94-7CC21F5C11B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADD74CEA-D55A-4719-8A94-7CC21F5C11B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADD74CEA-D55A-4719-8A94-7CC21F5C11B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA417771-1E09-448A-9938-DE3FEAE64B04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA417771-1E09-448A-9938-DE3FEAE64B04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA417771-1E09-448A-9938-DE3FEAE64B04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA417771-1E09-448A-9938-DE3FEAE64B04}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C4E5DB1A-B0BA-4186-8C34-2CD8B6F01B18}
+	EndGlobalSection
+EndGlobal
