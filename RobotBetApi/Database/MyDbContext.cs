@@ -15,13 +15,12 @@ namespace RobotBetApi.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Pilot>()
+                .HasIndex(p => new { p.RaceId, p.PilotCode })
+                .IsUnique(true);
+            modelBuilder.Entity<Pilot>()
                 .HasOne(p => p.Race)
                 .WithMany(r => r.Pilots)
                 .HasForeignKey(p => p.RaceId);
-
-            modelBuilder.Entity<Race>()
-                .HasMany(r => r.Pilots)
-                .WithOne(r => r.Race);
         }
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
         {

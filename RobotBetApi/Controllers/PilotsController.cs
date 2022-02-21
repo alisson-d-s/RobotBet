@@ -44,45 +44,45 @@ namespace RobotBetApi.Controllers
 
         // PUT: api/Pilots/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPilot(int id, Pilot pilot)
-        {
-            if (id != pilot.PilotId)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutPilot(int id, Pilot pilot)
+        //{
+        //    if (id != pilot.PilotId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(pilot).State = EntityState.Modified;
+        //    _context.Entry(pilot).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PilotExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!PilotExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         // POST: api/Pilots
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Pilot>> PostPilot(Pilot pilot)
-        {
-            _context.Pilots.Add(pilot);
-            await _context.SaveChangesAsync();
+        //[HttpPost]
+        //public async Task<ActionResult<Pilot>> PostPilot(Pilot pilot)
+        //{
+        //    _context.Pilots.Add(pilot);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPilot", new { id = pilot.PilotId }, pilot);
-        }
+        //    return CreatedAtAction("GetPilot", new { id = pilot.PilotId }, pilot);
+        //}
 
         // DELETE: api/Pilots/5
         [HttpDelete("{id}")]
@@ -100,9 +100,9 @@ namespace RobotBetApi.Controllers
             return NoContent();
         }
 
-        private bool PilotExists(int id)
-        {
-            return _context.Pilots.Any(e => e.PilotId == id);
-        }
+        //private bool PilotExists(int id)
+        //{
+        //    return _context.Pilots.Any(e => e.PilotId == id);
+        //}
     }
 }

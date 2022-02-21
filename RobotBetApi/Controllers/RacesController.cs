@@ -33,7 +33,6 @@ namespace RobotBetApi.Controllers
                             Pilots = from p in r.Pilots
                                      select new PilotDto()
                                      {
-                                         //RaceId = p.RaceId,
                                          PilotCode = p.PilotCode,
                                          PilotName = p.PilotName,
                                          Odd = p.Odd
@@ -54,7 +53,6 @@ namespace RobotBetApi.Controllers
                     Pilots = from p in r.Pilots
                              select new PilotDto()
                              {
-                                 //RaceId = p.RaceId,
                                  PilotCode = p.PilotCode,
                                  PilotName = p.PilotName,
                                  Odd = p.Odd
@@ -116,13 +114,11 @@ namespace RobotBetApi.Controllers
                 Pilots = from p in race.Pilots
                          select new PilotDto()
                          {
-                             //RaceId = p.RaceId,
                              PilotCode = p.PilotCode,
                              PilotName = p.PilotName,
                              Odd = p.Odd
                          }
             };
-
             return CreatedAtAction("GetRace", new { id = race.RaceId }, raceDto);
         }
 

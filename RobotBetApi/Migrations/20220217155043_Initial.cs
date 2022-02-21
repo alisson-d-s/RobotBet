@@ -29,7 +29,7 @@ namespace RobotBetApi.Migrations
                 name: "Pilots",
                 columns: table => new
                 {
-                    PilotId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     RaceId = table.Column<int>(type: "int", nullable: false),
                     PilotCode = table.Column<int>(type: "int", nullable: false),
@@ -39,7 +39,7 @@ namespace RobotBetApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pilots", x => x.PilotId);
+                    table.PrimaryKey("PK_Pilots", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Pilots_Races_RaceId",
                         column: x => x.RaceId,
@@ -50,9 +50,10 @@ namespace RobotBetApi.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pilots_RaceId",
+                name: "IX_Pilots_RaceId_PilotCode",
                 table: "Pilots",
-                column: "RaceId");
+                columns: new[] { "RaceId", "PilotCode" },
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

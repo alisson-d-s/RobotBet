@@ -8,7 +8,7 @@ namespace RobotBetApi.Models
     {
         [Key]
         [Required()]
-        public int PilotId { get; set; }
+        public int Id { get; set; }
         public int RaceId { get; set; } 
         [Required()]
         public int PilotCode { get; set; } // 1 - Verde | 2 - Vermelho | 3 - Amarelo | 4 - Roxo

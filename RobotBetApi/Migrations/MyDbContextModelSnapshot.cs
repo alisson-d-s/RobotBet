@@ -19,7 +19,7 @@ namespace RobotBetApi.Migrations
 
             modelBuilder.Entity("RobotBetApi.Models.Pilot", b =>
                 {
-                    b.Property<int>("PilotId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -37,9 +37,10 @@ namespace RobotBetApi.Migrations
                     b.Property<int>("RaceId")
                         .HasColumnType("int");
 
-                    b.HasKey("PilotId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("RaceId");
+                    b.HasIndex("RaceId", "PilotCode")
+                        .IsUnique();
 
                     b.ToTable("Pilots");
                 });

@@ -8,19 +8,116 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace RobotBetWatcher
 {
     static class Program
     {
         private static TimeSpan latestTime;
-        private static readonly Page page = GetBrowserAsync().Result;
-        static void Main(string[] args)
+        static async Task Main(string[] args)
+        {
+            //var backgroundWorker = new BackgroundWorker();
+            //backgroundWorker.DoWork += DoWork;
+            //backgroundWorker.RunWorkerCompleted += RunWorkerCompleted;
+
+            //Console.ReadKey();
+            //backgroundWorker.RunWorkerAsync();
+
+            //Console.ReadLine();
+            try
+            {
+                //IConfiguration config = Configuration.Default.WithDefaultLoader().WithCss().WithCookies().WithJavaScript();
+                //IBrowsingContext context = BrowsingContext.New(config);
+                //IDocument document = await context.OpenAsync(url);
+
+                Console.Write("Downloading browser... ");
+                if (GetBrowser.GetBrowserAsync().Result)
+                {
+                    Console.WriteLine("Completed!");
+                    Console.WriteLine(GetBrowser.Browser.GetUserAgentAsync().Result);
+                }
+                else
+                {
+                    Console.WriteLine("Browser download error.");
+                    Console.ReadKey();
+                }
+
+                Console.Write("Opening pages... ");
+                if (GetPage.OpenPagesAsync().Result)
+                {
+                    Console.WriteLine("Completed!");
+                    //var htmlPageResults = await GetPage.PageResults.GetContentAsync();                    
+                }
+                else
+                {
+                    Console.WriteLine("Open pages error.");
+                    Console.ReadKey();
+                }
+                //await DeleteCookie(GetPage.PageCurrentRace);
+                await GetPilot();
+                Console.ReadKey();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("erro");
+            }
+        }
+        private static async Task DeleteCookie(Page page)
+        {
+            var cookies = new List<CookieParam>
+            {
+                new CookieParam{ Name = "__cf_bm", Domain = ".bet365.com" },
+                new CookieParam{ Name = "__cf_bm", Domain = ".imagecache365.com" },
+                new CookieParam{ Name = "aaat" },
+                new CookieParam{ Name = "aps03" },
+                new CookieParam{ Name = "pstk" },
+                new CookieParam{ Name = "qBvrxRyB" },
+                new CookieParam{ Name = "rmbs" },
+                new CookieParam{ Name = "session" },
+                new CookieParam{ Name = "usdi" }
+            };
+
+            while (!Console.KeyAvailable)
+                await page.DeleteCookieAsync(cookies.ToArray());
+                //    new IEnumerable<CookieParam>()
+                //    {
+                //        Name = "__cf_bm",
+                //        Domain = ".imagecache365.com"
+                //    },
+                //);
+        }
+
+        private static void RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            GetBrowser.Browser.CloseAsync();
+        }
+
+        private static async void DoWork(object sender, DoWorkEventArgs e)
         {
             try
             {
+                Console.Write("Downloading browser... ");
+                if (await GetBrowser.GetBrowserAsync())
+                {
+                    Console.WriteLine("Completed!");
+                }
+                else
+                {
+                    Console.WriteLine("Browser download error.");
+                    return;
+                }
+
+                Console.Write("Opening pages... ");
+                if (await GetPage.OpenPagesAsync())
+                    Console.WriteLine("Completed!");
+                else
+                {
+                    Console.WriteLine("Open pages error.");
+                    return;
+                }
+
                 GetPilot();
-                Console.WriteLine("Press any key to stop...");
                 Console.ReadKey();
             }
             catch (Exception)
@@ -57,12 +154,12 @@ namespace RobotBetWatcher
             return page;
         }
 
-        private static async void GetPilot()
+        private static async Task GetPilot()
         {
             while (!Console.KeyAvailable)
             {
                 GetRace race = new();
-                var taskRace = race.GetCurrentPilotAsync(page);
+                var taskRace = race.GetCurrentPilotAsync(GetPage.PageCurrentRace);
                 while (!taskRace.IsCompleted)
                 {
                     Thread.Sleep(1000);
@@ -71,7 +168,8 @@ namespace RobotBetWatcher
                 if (taskRace.IsFaulted)
                 {
                     Console.WriteLine($"Pilot search error.\r\n{taskRace.Exception.Message}!");
-                    return;
+                    await GetPage.PageCurrentRace.ReloadAsync();
+                    continue;
                 }
 
                 var raceTask = taskRace.Result;
