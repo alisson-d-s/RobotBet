@@ -1,0 +1,28 @@
+{
+  "name": "RobotBet",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+
+  },
+  "action": {
+    "default_popup": "src/popup.html",
+    "default_icon": "images/icon.png"
+  },
+  "options_page": "src/options.html",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs",
+    "notifications",
+    "cookies"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ]
+}

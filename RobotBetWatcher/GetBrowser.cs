@@ -27,12 +27,13 @@ namespace RobotBetWatcher
             //BrowserFetcher browserFetcher = new();
             //await browserFetcher.DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
             return await Puppeteer.LaunchAsync(new LaunchOptions
-            {
+            { 
                 Headless = false,
                 DefaultViewport = null,
                 ExecutablePath = @"C:\Program Files\Google\Chrome\Application\chrome.exe",
                 Product = Product.Chrome,
-                UserDataDir = @"C:\Users\TI-N001\Documents\Docs"
+                UserDataDir = @"C:\Users\TI-N001\Documents\Docs",
+                //SlowMo = 500
             });
         }
     }

@@ -9,6 +9,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Opera;
+using OpenQA.Selenium.Firefox;
+//using WebDriverManager;
+//using WebDriverManager.DriverConfigs.Impl;
 
 namespace RobotBetWatcher
 {
@@ -17,6 +23,23 @@ namespace RobotBetWatcher
         private static TimeSpan latestTime;
         static async Task Main(string[] args)
         {
+            //ChromeOptions options = new();
+            //options.AddArgument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36");
+            //options.AddExcludedArgument("--enable-automation");
+            //options.AddArguments("--disable-infobars");
+            //options.AddAdditionalOption("--useAutomationExtension", false);
+            ////options.AddArgument("disable-blink-features=AutomationControlled");
+            ////options.AddAdditionalChromeOption("excludeSwitches", "enable-automation");
+
+            //IWebDriver driver;
+            //driver = new ChromeDriver(@"C:\Users\TI-N001\Downloads\chromedriver_win32 (1)", options);
+            //driver.Manage().Window.Maximize();
+            //driver.Navigate().GoToUrl("https://www.bet365.com/#/AVR/B24/R^1/");
+
+            //Console.WriteLine(driver.FindElement(By.ClassName("vr-EventTimesNavBarButton")).Text);
+
+
+
             //var backgroundWorker = new BackgroundWorker();
             //backgroundWorker.DoWork += DoWork;
             //backgroundWorker.RunWorkerCompleted += RunWorkerCompleted;
