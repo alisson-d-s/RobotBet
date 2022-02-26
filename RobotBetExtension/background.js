@@ -13,18 +13,3 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
             .catch(err => console.log(err));
     }
 });
-
-
-//document.addEventListener("DOMContentLoaded", function () {
-//    console.log("scriptou");
-//    //chrome.tabs.getSelected(null, function (tab) {
-//    //    chrome.scripting.executeScript({
-//    //        target: { tabId: tab.tabId },
-//    //        files: ["src/content.js"]
-//    //    })
-//    //        .then(() => {
-//    //            console.log("Script injected.");
-//    //        })
-//    //        .catch(err => console.log(err));
-//    //});
-//});

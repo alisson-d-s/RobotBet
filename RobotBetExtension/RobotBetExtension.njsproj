@@ -38,9 +38,6 @@
     <Content Include="src\content.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\dom.js">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="src\options.html">
       <SubType>Code</SubType>
     </Content>
