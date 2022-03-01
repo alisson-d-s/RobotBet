@@ -1,10 +1,9 @@
 function GetRace() {
     console.log("Getting races...");
-    const Race = [];
-    Race.push({
+    const Race = {
         RaceDate: GetDate(document.querySelector(".vr-EventTimesNavBarButton-selected").textContent),
         Pilots: GetPilot()
-    });
+    };
     console.log(JSON.stringify(Race));
 }
 
@@ -58,14 +57,18 @@ function GetResult() {
 function GetResultsRaceName(arrayResultsRaceName) {
     const newArray = [];
     arrayResultsRaceName.forEach((array) => {
-        const time = GetResultTime(array.textContent.substring(0, 5).replace(" ", ""));
-        newArray.push(time.length === 5 ? time : `0${time}`);
+
+        //const time = GetResultTime(array.textContent.substring(0, 5).replace(" ", ""));
+        //newArray.push(time.length === 5 ? time : `0${time}`);
+        newArray.push(GetResultTime(array.textContent));
     });
     return newArray;
 };
 
 function GetResultTime(resultsRaceName) {
-    return resultsRaceName.substring(0, 5);
+    const time = resultsRaceName.substring(0, 5).replace(" ", "");
+    return time.length === 5 ? time : `0${time}`;
+    //return resultsRaceName.substring(0, 5);
 };
 
 function CheckSuspendedPage() {
@@ -117,14 +120,19 @@ function PageLoaded(mutation) {
 };
 
 function SetCookies(raceSchedules) {
+    document.cookie = `LastRace=${raceSchedules[0].textContent}`;
     for (let i = 0; i < 6; i++) {
         let raceCode = i + 1
         document.cookie = `Race${raceCode}=${JSON.stringify({ RaceId: 1, Time: raceSchedules[i].textContent })}`;
     }
 };
 
+function GetMinutes(time) {
+    return time.substring(3, 5);
+};
+
 function GetDate(time) {
-    const minutes = time.substring(3, 5);
+    const minutes = GetMinutes(time);
     //console.log(`time: ${time}, minutes: ${minutes}`);
 
     let date = new Date();
@@ -132,6 +140,12 @@ function GetDate(time) {
     date.toLocaleDateString();
 
     return date;
+};
+
+function GetCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
 };
 
 function SetObserver() {
@@ -149,22 +163,64 @@ function SetObserver() {
         if (CheckEventStarted()) return;
         console.log("entrou-func");
 
-        mutationsList.forEach((mutation) => {
+        mutationsList.forEach(async (mutation) => {
+            //console.log(mutation);
             console.log("entrou-loop");
 
             if (!PageLoaded(mutation)) return;
 
             console.log("executou-mutation");
 
-            const raceSchedules = document.querySelectorAll(".vr-EventTimesNavBarButton");
+            const raceSchedules = await document.querySelectorAll(".vr-EventTimesNavBarButton");
             if (!raceSchedules)
                 return console.log("Search race shedule error.");
             SetCookies(raceSchedules);
 
-            if (document.querySelector(".vr-EventTimesNavBarButton-selected"))
-                GetRace();
-            if (document.querySelector(".vr-ResultsNavBarButton-selected"))
+            const results = await document.querySelector(".vr-ResultsNavBarButton");
+            if (!results) return;
+
+            //document.location.reload();
+            const eventTimesNavBarElement = await document.querySelector(".vr-EventTimesNavBar_ButtonContainer");
+            const callbackEventTimesBar = function (mutationEventList, observerEvent) {
+                console.log("entrou-event");
+                mutationEventList.forEach(async (mutationEvent) => {
+                    //console.log(mutationEvent);
+                    console.log("entrou-loop-event");
+                    const timeLastRace = GetDate(GetResultTime(await document.querySelectorAll(".vr-EventTimesNavBarButton").item(0).textContent));
+                    const timeLastResult = GetDate(GetResultTime(await document.querySelectorAll(".vrr-MarketGroupOutrightRaceDescription_RaceName").item(0).textContent));
+                    console.log(timeLastRace + " " + timeLastResult);
+
+                    let raceFound = false;
+                    observer.disconnect();
+                    while (!raceFound) {
+                        //setTimeout(() => {
+                        const timeLastResultPlus3 = new Date.parse(timeLastResult).add({ minutes: 3 });
+                        //timeLastResult.addMinutes(3);
+                        console.log(`TimeLastRace: ${timeLastRace} | TimeLastResult ${timeLastResult} | TimeLastResult-Plus3: ${timeLastResultPlus3}`);
+                        if (timeLastRace.compareTo(timeLastResultPlus3) > 0) {
+                            document.location.reload();
+
+                            observerEvent.disconnect();
+                        }
+                        //}, 5000);
+                    }
+                    observerEvent.disconnect();
+                });
+            };
+
+            //console.log(raceSchedules);
+            const observerEventTimesBar = new MutationObserver(callbackEventTimesBar);
+            observerEventTimesBar.observe(eventTimesNavBarElement, config);
+
+            setTimeout(() => { results.click(); }, 3000);
+            if (await document.querySelector(".vrr-Price"))//vrr-Price    vr-ResultsNavBarButton-selected
                 GetResult();
+
+
+            //if (document.querySelector(".vr-EventTimesNavBarButton-selected"))
+            //    GetRace();
+            //if (document.querySelector(".vr-ResultsNavBarButton-selected"))
+            //    GetResult();
 
             //observer.disconnect();
         });
