@@ -182,30 +182,30 @@ function SetObserver() {
             //document.location.reload();
             const eventTimesNavBarElement = await document.querySelector(".vr-EventTimesNavBar_ButtonContainer");
             const callbackEventTimesBar = function (mutationEventList, observerEvent) {
-                console.log("entrou-event");
-                mutationEventList.forEach(async (mutationEvent) => {
-                    //console.log(mutationEvent);
-                    console.log("entrou-loop-event");
-                    const timeLastRace = GetDate(GetResultTime(await document.querySelectorAll(".vr-EventTimesNavBarButton").item(0).textContent));
-                    const timeLastResult = GetDate(GetResultTime(await document.querySelectorAll(".vrr-MarketGroupOutrightRaceDescription_RaceName").item(0).textContent));
-                    console.log(timeLastRace + " " + timeLastResult);
+                try {
+                    console.log("entrou-event");
+                    mutationEventList.forEach(async (mutationEvent) => {
+                        CheckSuspendedPage();
+                        console.log("entrou-loop-event");
+                        const timeLastRace = GetDate(GetResultTime(await document.querySelectorAll(".vr-EventTimesNavBarButton").item(0)));
+                        if (!timeLastRace) return;
+                        const timeLastResult = GetDate(GetResultTime(await document.querySelectorAll(".vrr-MarketGroupOutrightRaceDescription_RaceName").item(0).textContent));
+                        if (!timeLastResult) return;
+                        console.log(timeLastRace + " " + timeLastResult);
 
-                    let raceFound = false;
-                    observer.disconnect();
-                    while (!raceFound) {
-                        //setTimeout(() => {
+                        observer.disconnect();
                         const timeLastResultPlus3 = new Date.parse(timeLastResult).add({ minutes: 3 });
-                        //timeLastResult.addMinutes(3);
                         console.log(`TimeLastRace: ${timeLastRace} | TimeLastResult ${timeLastResult} | TimeLastResult-Plus3: ${timeLastResultPlus3}`);
                         if (timeLastRace.compareTo(timeLastResultPlus3) > 0) {
                             document.location.reload();
 
                             observerEvent.disconnect();
+                            observer.observe();
                         }
-                        //}, 5000);
-                    }
-                    observerEvent.disconnect();
-                });
+                    });
+                } catch (err) {
+                    CheckSuspendedPage();
+                }
             };
 
             //console.log(raceSchedules);

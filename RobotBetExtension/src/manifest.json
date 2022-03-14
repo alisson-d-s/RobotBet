@@ -4,14 +4,14 @@
   "description": "",
   "manifest_version": 3,
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "src/background.js"
   },
   "icons": {
 
   },
   "action": {
     "default_popup": "src/popup.html",
-    "default_icon": "images/icon.png"
+    "default_icon": "assets/img/icon.png"
   },
   "options_page": "src/options.html",
   "permissions": [

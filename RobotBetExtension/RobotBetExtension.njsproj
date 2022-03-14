@@ -29,10 +29,10 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="images\icon.png" />
-    <Content Include="manifest.json" />
-    <Content Include="README.md" />
-    <Content Include="background.js">
+    <Content Include="assets\img\icon.png" />
+    <Content Include="package.json" />
+    <Content Include="src\manifest.json" />
+    <Content Include="src\background.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\content.js">
@@ -49,7 +49,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="images\" />
+    <Folder Include="assets\img\" />
+    <Folder Include="assets\locales\" />
+    <Folder Include="assets\" />
+    <Folder Include="test\" />
     <Folder Include="src\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
